@@ -1,4 +1,4 @@
-# push2sentinel
+# pushsecurity-sdk-go
 
 Go SDK for the PushSecurity public API. PushSecurity is A browser-based Identity Threat Detection & Response (ITDR) platform.
 
