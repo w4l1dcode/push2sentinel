@@ -4,8 +4,8 @@ import (
 	"flag"
 	_ "fmt"
 	"github.com/sirupsen/logrus"
-	"github.com/w4l1dcode/push2sentinel/config"
-	"github.com/w4l1dcode/push2sentinel/pkg/push"
+	"github.com/w4l1dcode/pushsecurity-sdk-go/config"
+	"github.com/w4l1dcode/pushsecurity-sdk-go/pkg/push"
 	_ "io/ioutil"
 	_ "net/http"
 )
@@ -37,7 +37,7 @@ func main() {
 
 	pushClient, err := push.New(logger, conf.Push.ApiToken)
 	if err != nil {
-		logger.WithError(err).Fatal("failed to create aikido client")
+		logger.WithError(err).Fatal("failed to create pushsecurity client")
 	}
 
 	// --
