@@ -29,7 +29,7 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 USER 1000
 
 # add our application binary
-COPY push2sentinel /push2sentinel
+COPY pushsecurity /pushsecurity
 
 # entrypoint
-ENTRYPOINT ["/push2sentinel"]
+ENTRYPOINT ["/pushsecurity"]

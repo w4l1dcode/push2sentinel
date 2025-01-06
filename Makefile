@@ -1,16 +1,17 @@
+
 all: run
 
 run:
 	go run ./cmd/... -config=dev.yml
 
-build:
-	CGO_ENABLED=0 go build -o push2sentinel ./cmd/...
+setup:
+	go install github.com/goreleaser/goreleaser@latest
 
-test:
-	go test -v ./...
+build:
+	$$GOPATH/bin/goreleaser build --config=.github/goreleaser.yml --clean --snapshot
 
 clean:
-	rm -r dist/ push2sentinel || true
+	rm -r dist/ pushsecurity || true
 
 update:
 	go get -u ./...
