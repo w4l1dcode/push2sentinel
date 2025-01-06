@@ -44,7 +44,7 @@ func main() {
 
 	accounts, err := pushClient.GetAccounts(1)
 	if err != nil {
-		logger.WithError(err).Fatal("failed to get issues")
+		logger.WithError(err).Fatal("failed to get accounts")
 	}
 	logger.Infof("Retrieved %d accounts:", len(accounts))
 	logger.Println(accounts)
