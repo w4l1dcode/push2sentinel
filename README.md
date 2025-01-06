@@ -1,4 +1,4 @@
-# miro2sentinel
+# push2sentinel
 
 A Go program that exports [PushSecurity](https://pushsecurity.com/) (A browser-based Identity Threat Detection & Response (ITDR) platform) logs to Microsoft Sentinel SIEM. 
 The table used; `PushSecurity_CL`.
