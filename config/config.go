@@ -9,32 +9,13 @@ import (
 )
 
 const (
-	defaultLogLevel      = "DEBUG"
-	defaultRetentionDays = 90
+	defaultLogLevel = "DEBUG"
 )
 
 type Config struct {
 	Log struct {
 		Level string `yaml:"level" env:"LOG_LEVEL" valid:"optional"`
 	} `json:"log"`
-
-	Microsoft struct {
-		AppID          string `yaml:"app_id" env:"MS_APP_ID" valid:"minstringlength(3)"`
-		SecretKey      string `yaml:"secret_key" env:"MS_SECRET_KEY" valid:"minstringlength(3)"`
-		TenantID       string `yaml:"tenant_id" env:"MS_TENANT_ID" valid:"minstringlength(3)"`
-		SubscriptionID string `yaml:"subscription_id" env:"MS_SUB_ID" valid:"minstringlength(3)"`
-
-		DataCollection struct {
-			Endpoint   string `yaml:"endpoint" env:"MS_DCR_ENDPOINT" valid:"minstringlength(3)"`
-			RuleID     string `yaml:"rule_id" env:"MS_DCR_RULE" valid:"minstringlength(3)"`
-			StreamName string `yaml:"stream_name" env:"MS_DCR_STREAM" valid:"minstringlength(3)"`
-		} `yaml:"dcr"`
-
-		ResourceGroup string `yaml:"resource_group" env:"MS_RSG_ID" valid:"minstringlength(3)"`
-		WorkspaceName string `yaml:"workspace_name" env:"MS_WS_NAME" valid:"minstringlength(3)"`
-
-		RetentionDays uint32 `yaml:"retention_days" env:"MS_RETENTION_DAYS" valid:"optional"`
-	} `yaml:"microsoft"`
 
 	Push struct {
 		ApiToken      string `yaml:"api_token" env:"PUSH_API_TOKEN" valid:"required"`
@@ -45,10 +26,6 @@ type Config struct {
 func (c *Config) Validate() error {
 	if c.Log.Level == "" {
 		c.Log.Level = defaultLogLevel
-	}
-
-	if c.Microsoft.RetentionDays == 0 {
-		c.Microsoft.RetentionDays = defaultRetentionDays
 	}
 
 	if valid, err := validator.ValidateStruct(c); !valid || err != nil {
