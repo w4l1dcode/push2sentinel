@@ -1,6 +1,6 @@
 # pushsecurity-sdk-go
 
-Go SDK for the PushSecurity public API. PushSecurity is A browser-based Identity Threat Detection & Response (ITDR) platform.
+Go SDK for the [PushSecurity](https://pushsecurity.com) public API. PushSecurity is A browser-based Identity Threat Detection & Response (ITDR) platform.
 
 ## Running
 
