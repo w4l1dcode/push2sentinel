@@ -42,7 +42,7 @@ func main() {
 
 	// --
 
-	accounts, err := pushClient.GetAccounts(1)
+	accounts, err := pushClient.GetAccounts(conf.Push.LookbackHours)
 	if err != nil {
 		logger.WithError(err).Fatal("failed to get accounts")
 	}
@@ -51,7 +51,7 @@ func main() {
 
 	// --
 
-	apps, err := pushClient.GetApps(1)
+	apps, err := pushClient.GetApps(conf.Push.LookbackHours)
 	if err != nil {
 		logger.WithError(err).Fatal("failed to get apps")
 	}
@@ -60,7 +60,7 @@ func main() {
 
 	// --
 
-	browsers, err := pushClient.GetBrowsers(1)
+	browsers, err := pushClient.GetBrowsers(conf.Push.LookbackHours)
 	if err != nil {
 		logger.WithError(err).Fatal("failed to get browsers")
 	}
@@ -69,7 +69,7 @@ func main() {
 
 	// --
 
-	employees, err := pushClient.GetEmployees(1)
+	employees, err := pushClient.GetEmployees(conf.Push.LookbackHours)
 	if err != nil {
 		logger.WithError(err).Fatal("failed to get employees")
 	}
@@ -78,7 +78,7 @@ func main() {
 
 	// --
 
-	findings, err := pushClient.GetFindings(1)
+	findings, err := pushClient.GetFindings(conf.Push.LookbackHours)
 	if err != nil {
 		logger.WithError(err).Fatal("failed to get findings")
 	}
