@@ -23,7 +23,7 @@ type Employee struct {
 }
 
 func (p *Push) GetEmployees(lookBackHours uint32) ([]map[string]string, error) {
-	return fetchLogs(p, lookBackHours, "creationTimestampAfter", employeesURL, func(employee Employee) map[string]string {
+	return fetchLogs(p, lookBackHours, "", employeesURL, func(employee Employee) map[string]string {
 		creationTime := time.Unix(int64(employee.CreationTimestamp), 0).UTC().Format(time.RFC3339)
 
 		newMap := []map[string]interface{}{

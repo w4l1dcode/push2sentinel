@@ -24,7 +24,7 @@ type App struct {
 }
 
 func (p *Push) GetApps(lookBackHours uint32) ([]map[string]string, error) {
-	return fetchLogs(p, lookBackHours, "creationTimestampAfter", accountsURL, func(app App) map[string]string {
+	return fetchLogs(p, lookBackHours, "creationTimestampAfter", appsURL, func(app App) map[string]string {
 		creationTime := time.Unix(int64(app.CreationTimestamp), 0).UTC().Format(time.RFC3339)
 
 		newMap := []map[string]interface{}{

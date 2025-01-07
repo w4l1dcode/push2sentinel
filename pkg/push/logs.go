@@ -22,10 +22,15 @@ func fetchLogs[T any](p *Push, lookBackHours uint32, timestampType string, apiUR
 		}
 
 		query := url.Values{}
-		query.Set(timestampType, fmt.Sprintf("%d", startTime))
+
+		if timestampType != "" {
+			query.Set(timestampType, fmt.Sprintf("%d", startTime))
+		}
+
 		if cursor != "" {
 			query.Set("cursor", cursor)
 		}
+
 		httpRequest.URL.RawQuery = query.Encode()
 
 		httpRequest.Header.Set("x-api-key", p.apiToken)
@@ -60,7 +65,7 @@ func fetchLogs[T any](p *Push, lookBackHours uint32, timestampType string, apiUR
 		}
 
 		if p.Logger != nil {
-			p.Logger.Printf("Fetched %d items from API\n", len(apiResponse.Result))
+			p.Logger.Printf("Fetched %d items from API: %s\n", len(apiResponse.Result), apiURL)
 		}
 
 		logs = append(logs, apiResponse.Result...)
