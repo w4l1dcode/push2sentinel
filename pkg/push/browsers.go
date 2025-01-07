@@ -2,7 +2,6 @@ package push
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 )
 
@@ -24,12 +23,8 @@ type Browser struct {
 	LastOnlineTimestamp int    `json:"lastOnlineTimestamp"`
 }
 
-func (p *Push) GetBrowsers(lookback uint32) ([]map[string]string, error) {
-	currentTime := time.Now().Unix()
-	lastUsedTimestampAfter := currentTime - int64(lookback)*3600
-	url := fmt.Sprintf("%s?lastOnlineTimestampAfter=%d", browsersURL, lastUsedTimestampAfter)
-
-	return fetchLogs(p, url, func(browser Browser) map[string]string {
+func (p *Push) GetBrowsers(lookBackHours uint32) ([]map[string]string, error) {
+	return fetchLogs(p, lookBackHours, "lastOnlineTimestampAfter", browsersURL, func(browser Browser) map[string]string {
 		creationTime := time.Unix(int64(browser.CreationTimestamp), 0).UTC().Format(time.RFC3339)
 
 		newMap := []map[string]interface{}{

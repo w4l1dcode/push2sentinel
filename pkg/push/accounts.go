@@ -2,7 +2,6 @@ package push
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 )
 
@@ -29,12 +28,8 @@ type Account struct {
 	LastUsedTimestamp int `json:"lastUsedTimestamp"`
 }
 
-func (p *Push) GetAccounts(lookback uint32) ([]map[string]string, error) {
-	currentTime := time.Now().Unix()
-	lastUsedTimestampAfter := currentTime - int64(lookback)*3600
-	url := fmt.Sprintf("%s?lastUsedTimestampAfter=%d", accountsURL, lastUsedTimestampAfter)
-
-	return fetchLogs(p, url, func(account Account) map[string]string {
+func (p *Push) GetAccounts(lookBackHours uint32) ([]map[string]string, error) {
+	return fetchLogs(p, lookBackHours, "lastUsedTimestampAfter", accountsURL, func(account Account) map[string]string {
 		creationTime := time.Unix(int64(account.CreationTimestamp), 0).UTC().Format(time.RFC3339)
 
 		newMap := []map[string]interface{}{

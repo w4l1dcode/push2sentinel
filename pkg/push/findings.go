@@ -2,7 +2,6 @@ package push
 
 import (
 	"encoding/json"
-	"fmt"
 	"time"
 )
 
@@ -23,12 +22,8 @@ type Finding struct {
 	CreationTimestamp   int      `json:"creationTimestamp"`
 }
 
-func (p *Push) GetFindings(lookback uint32) ([]map[string]string, error) {
-	currentTime := time.Now().Unix()
-	lastUsedTimestampAfter := currentTime - int64(lookback)*3600
-	url := fmt.Sprintf("%s?creationTimestampAfter=%d", findingsURL, lastUsedTimestampAfter)
-
-	return fetchLogs(p, url, func(finding Finding) map[string]string {
+func (p *Push) GetFindings(lookBackHours uint32) ([]map[string]string, error) {
+	return fetchLogs(p, lookBackHours, "creationTimestampAfter", findingsURL, func(finding Finding) map[string]string {
 		creationTime := time.Unix(int64(finding.CreationTimestamp), 0).UTC().Format(time.RFC3339)
 
 		newMap := []map[string]interface{}{

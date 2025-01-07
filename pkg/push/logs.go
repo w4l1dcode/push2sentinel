@@ -8,11 +8,12 @@ import (
 	"time"
 )
 
-func fetchLogs[T any](p *Push, apiURL string, transform func(T) map[string]string) ([]map[string]string, error) {
+func fetchLogs[T any](p *Push, lookBackHours uint32, timestampType string, apiURL string, transform func(T) map[string]string) ([]map[string]string, error) {
 	var logs []T
 	var result []map[string]string
 	httpClient := http.Client{Timeout: time.Second * 10}
 	cursor := ""
+	startTime := time.Now().Add(-1 * time.Duration(lookBackHours) * time.Hour).Unix()
 
 	for {
 		httpRequest, err := http.NewRequest(http.MethodGet, apiURL, nil)
@@ -21,6 +22,7 @@ func fetchLogs[T any](p *Push, apiURL string, transform func(T) map[string]strin
 		}
 
 		query := url.Values{}
+		query.Set(timestampType, fmt.Sprintf("%d", startTime))
 		if cursor != "" {
 			query.Set("cursor", cursor)
 		}
@@ -83,6 +85,5 @@ func fetchLogs[T any](p *Push, apiURL string, transform func(T) map[string]strin
 		}
 		result = append(result, transformed)
 	}
-
 	return result, nil
 }
